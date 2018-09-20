@@ -101,13 +101,13 @@ QUICKCHECK ?= $(QUICKCHECK_DEFAULT)
 
 $(cparser_EXE): $(LIBFIRM_FILE) $(cparser_OBJECTS)
 	@echo 'LD $@'
-	$(Q)$(LINK) $(cparser_OBJECTS) $(LIBFIRM_FILE) -o $@ $(LINKFLAGS)
+	$(Q)$(LINK) $(cparser_OBJECTS) CInterface.o libpbqp_c_interface.a $(LIBFIRM_FILE) -o $@ $(LINKFLAGS)
 
-$(libcparser_A): $(libcparser_OBJECTS)
+$(libcparser_A): $(libcparser_OBJECTS) CInterface.o libpbqp_c_interface.a
 	@echo 'AR $@'
 	$(Q)$(AR) -crs $@ $^
 
-$(libcparser_DLL): $(libcparser_OBJECTS) $(LIBFIRM_FILE_DLL)
+$(libcparser_DLL): $(libcparser_OBJECTS) $(LIBFIRM_FILE_DLL) libpbqp_c_interface.a CInterface.o
 	@echo 'LINK $@'
 	$(Q)$(LINK) -shared $^ $(LINKFLAGS) -o "$@"
 
